@@ -1,0 +1,42 @@
+<%= form_with(model: course) do |form| %>
+  <% if course.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
+
+      <ul>
+        <% course.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :course_name, style: "display: block" %> 
+    <%= form.text_field :course_name, class:"form-control", placeholder: "course name" %>
+  </div>
+</br>
+  <div>
+    <%= form.label :course_instructor, style: "display: block" %>
+    <%= form.text_field :course_instructor, class:"form-control", placeholder: "course instructor" %>
+  </div>
+</br>
+  <div>
+    <%= form.label :course_grading, style: "display: block" %>
+    <%= form.text_field :course_grading, class:"form-control", placeholder: "course grading" %>
+  </div>
+</br>
+  <div>
+    <%= form.label :course_yourgrade, style: "display: block" %>
+    <%= form.text_field :course_yourgrade, class:"form-control", placeholder: "course yourgrade" %>
+  </div>
+</br>
+  <div>
+    <%= form.label :course_notes, style: "display: block" %>
+    <%= form.text_field :course_notes, class:"form-control", placeholder: "course notes" %>
+  </div>
+</br>
+  <div>
+    <%= form.submit class:"btn btn-secondary"%>
+  </div>
+<% end %>

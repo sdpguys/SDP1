@@ -1,0 +1,64 @@
+
+<table class= "table">
+
+  <div id="<%= dom_id course %>">
+  <p>
+    <strong>Course name:</strong>
+    <%= course.course_name %>
+  </p>
+
+  <p>
+    <strong>Course instructor:</strong>
+    <%= course.course_instructor %>
+  </p>
+
+  <p>
+    <strong>Course grading:</strong>
+    <%= course.course_grading %>
+  </p>
+
+  <p>
+    <strong>Course yourgrade:</strong>
+    <%= course.course_yourgrade %>
+  </p>
+
+  <p>
+    <strong>Course notes:</strong>
+    <%= course.course_notes %>
+  </p>
+
+</div>
+
+  </table>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Course Name</th>
+      <th>Instructor</th>
+      <th>Grading</th>
+      <th>Your Grade</th>
+      <th>Notes</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @courses.each do |course| %>
+      <tr>
+        <td><%= course.id %></td>
+        <td><%= course.course_name %></td>
+        <td><%= course.course_instructor %></td>
+        <td><%= course.course_grading %></td>
+        <td><%= course.course_yourgrade %></td>
+        <td><%= course.course_notes %></td>
+        <td>
+          <%= link_to 'Show', course_path(course), class: 'btn btn-info btn-sm' %>
+          <%= link_to 'Edit', edit_course_path(course), class: 'btn btn-warning btn-sm' %>
+          <%= link_to 'Delete', course_path(course), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

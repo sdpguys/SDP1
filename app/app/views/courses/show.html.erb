@@ -1,0 +1,28 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="jumbotron">
+  <h1 class="display-4"> <%= @course.course_name %>
+  <%= @course.course_instructor %>
+  </h1>
+  <p class="lead">T<%= @course.course_grading %> | <%= @course.course_yourgrade %>
+  
+  </p>
+  <hr class="my-4">
+  <p><%= @course.course_notes %></p>
+  <p class="lead">
+    <a  <%= link_to "Edit course", edit_course_path(@course), class:"btn btn-secondary" %> |
+  <%= link_to "Back courses", courses_path, class:"btn btn-secondary" %>
+    </a>
+  </p>
+</div>
+
+<%= render @course %>
+
+<div>
+  <%= link_to "Edit course", edit_course_path(@course), class:"btn btn-secondary" %> |
+  <%= link_to "Back courses", courses_path, class:"btn btn-secondary" %>
+  </br>
+ </br>
+  <%= button_to "Destroy course", @course, method: :delete, class:"btn btn-secondary" %>
+</div>
+
