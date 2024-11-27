@@ -11,34 +11,39 @@
     </div>
   <% end %>
 <table class="table table-dark table-striped-columns">
-  <div>
+  <div class="field form-group">
     <%= form.label :course_name, style: "display: block" %>
-    <%= form.text_field :course_name %>
+    <%= form.text_field :course_name, class:"field form-control", placeholder:"Name of the Course" %>
   </div>
+  <br/>
 
-  <div>
+  <div class="field form-group">
     <%= form.label :course_instructor, style: "display: block" %>
-    <%= form.text_field :course_instructor %>
+    <%= form.text_field :course_instructor, class:"field form-control", placeholder:"Name of the instructor of the Course"  %>
   </div>
+   <br/>
 
-  <div>
+  <div class="field form-group">
     <%= form.label :course_grading_criteria, style: "display: block" %>
-    <%= form.text_field :course_grading_criteria %>
+    <%= form.text_field :course_grading_criteria, class:"field form-control", placeholder:"Grading criteria of the Course"  %>
   </div>
+   <br/>
 
-  <div>
+  <div class="field form-group">
     <%= form.label :courses_your_grade, style: "display: block" %>
-    <%= form.text_field :courses_your_grade %>
+    <%= form.text_field :courses_your_grade, class:"field form-control", placeholder:"Your overall grade from Course"  %>
   </div>
+   <br/>
 
-  <div>
+  <div class="field form-group">
     <%= form.label :course_comments, style: "display: block" %>
-    <%= form.text_field :course_comments %>
+    <%= form.text_field :course_comments, class:"field form-control", placeholder:"Your comments about Course"  %>
   </div>
+   <br/>
 
 
-
+<br/>
   <div>
-    <%= form.submit %>
+    <%= form.submit class:"btn btn-secondary" %>
   </div>
 <% end %>

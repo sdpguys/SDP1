@@ -1,11 +1,12 @@
 <% content_for :title, "New Course" %>
 
 <h1>New course</h1>
+<br/>
 
 <%= render "form", course: @course %>
 
 <br>
 
 <div>
-  <%= link_to "Back to Courses", courses_path %>
+  <%= link_to "Back to Courses", courses_path, class:"btn btn-secondary"  %>
 </div>
