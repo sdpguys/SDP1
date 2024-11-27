@@ -4,6 +4,7 @@
 
 <h1>Courses</h1>
 
+
 <div id="courses">
   <% @courses.each do |course| %>
     <%= render course %>
@@ -14,3 +15,4 @@
 </div>
 
 <%= link_to "New course", new_course_path %>
+

@@ -10,7 +10,7 @@
       </ul>
     </div>
   <% end %>
-
+<table class="table table-dark table-striped-columns">
   <div>
     <%= form.label :course_name, style: "display: block" %>
     <%= form.text_field :course_name %>
@@ -35,6 +35,8 @@
     <%= form.label :course_comments, style: "display: block" %>
     <%= form.text_field :course_comments %>
   </div>
+
+
 
   <div>
     <%= form.submit %>
