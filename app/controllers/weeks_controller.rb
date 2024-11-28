@@ -16,20 +16,29 @@ class WeeksController < ApplicationController
   end
 
   def edit
+    @week = @course.weeks.find(params[:id])
   end
 
   def update
+    @week = @course.weeks.find(params[:id])
     if @week.update(week_params)
       redirect_to course_path(@course), notice: "Week updated successfully!"
     else
       render :edit
     end
   end
+  def show
+    @week = @course.weeks.find(params[:id])
+  end
+
+
 
   def destroy
+    @week = @course.weeks.find(params[:id])
     @week.destroy
     redirect_to course_path(@course), notice: "Week deleted successfully."
   end
+
 
   private
 

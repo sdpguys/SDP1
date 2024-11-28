@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   resources :courses do
-    resources :weeks
+    resources :weeks, only: [ :new, :create, :edit, :update, :destroy, :show ]
   end
+
+
+
 
 
   get "home/about"

@@ -1,0 +1,18 @@
+<h3>Week: <%= @week.title %></h3>
+<p><%= @week.content %></p>
+
+<% if @week.files.attached? %>
+  <h4>Files:</h4>
+  <ul>
+    <% @week.files.each do |file| %>
+      <li><%= link_to file.filename, url_for(file), target: "_blank" %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No files uploaded for this week.</p>
+<% end %>
+
+<div class="week-actions">
+  <%= link_to 'Edit Week', edit_course_week_path(@course, @week), class: 'btn btn-secondary' %>
+  <%= link_to 'Delete Week', course_week_path(@course, @week), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+</div>
