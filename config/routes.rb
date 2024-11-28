@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :courses
+  resources :courses do
+    resources :weeks
+  end
+
+
   get "home/about"
 # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 root "home#index"

@@ -1,5 +1,6 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: %i[ show edit update destroy ]
+  # Use :set_course before the specified actions
+  before_action :set_course, only: [ :show, :edit, :update, :destroy ]
 
   # GET /courses or /courses.json
   def index
@@ -8,6 +9,7 @@ class CoursesController < ApplicationController
 
   # GET /courses/1 or /courses/1.json
   def show
+    @weeks = @course.weeks
   end
 
   # GET /courses/new
@@ -17,7 +19,9 @@ class CoursesController < ApplicationController
 
   # GET /courses/1/edit
   def edit
+    @course = Course.find(params[:id])
   end
+
 
   # POST /courses or /courses.json
   def create
@@ -49,8 +53,7 @@ class CoursesController < ApplicationController
 
   # DELETE /courses/1 or /courses/1.json
   def destroy
-    @course.destroy!
-
+    @course.destroy
     respond_to do |format|
       format.html { redirect_to courses_path, status: :see_other, notice: "Course was successfully destroyed." }
       format.json { head :no_content }
@@ -58,13 +61,14 @@ class CoursesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_course
-      @course = Course.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def course_params
-      params.expect(course: [ :course_name, :course_instructor, :course_grading_criteria, :courses_your_grade, :course_comments ])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_course
+    @course = Course.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def course_params
+    params.require(:course).permit(:course_name, :course_instructor, :course_grading_criteria, :courses_your_grade, :course_comments)
+  end
 end

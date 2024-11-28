@@ -1,12 +1,50 @@
 <% content_for :title, "New Course" %>
 
-<h1>New course</h1>
+<h1>New Course</h1>
 <br/>
 
-<%= render "form", course: @course %>
+<%= form_with(model: @course, local: true) do |form| %>
+  <% if @course.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+      <ul>
+        <% @course.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field form-group">
+    <%= form.label :course_name, style: "display: block" %>
+    <%= form.text_field :course_name, class: "field form-control", placeholder: "Name of the Course" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :course_instructor, style: "display: block" %>
+    <%= form.text_field :course_instructor, class: "field form-control", placeholder: "Name of the instructor of the Course" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :course_grading_criteria, style: "display: block" %>
+    <%= form.text_field :course_grading_criteria, class: "field form-control", placeholder: "Grading criteria of the Course" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :courses_your_grade, style: "display: block" %>
+    <%= form.text_field :courses_your_grade, class: "field form-control", placeholder: "Your overall grade from Course" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :course_comments, style: "display: block" %>
+    <%= form.text_field :course_comments, class: "field form-control", placeholder: "Your comments about Course" %>
+  </div>
+
+  <%= form.submit "Save Course", class: "btn btn-secondary" %>
+<% end %>
 
 <br>
 
 <div>
-  <%= link_to "Back to Courses", courses_path, class:"btn btn-dark"  %>
+  <%= link_to "Back to Courses", courses_path, class: "btn btn-dark" %>
 </div>
