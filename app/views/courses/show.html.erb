@@ -2,13 +2,13 @@
 
 <%= render @course %>
 
-<%= link_to 'Add New Week', new_course_week_path(@course), class: 'btn btn-primary' %>
 
 
 <div>
   <%= link_to "Edit this course", edit_course_path(@course), class: "btn btn-secondary" %> |
-  <%= link_to "Back to courses", courses_path, class: "btn btn-secondary" %>
-
+  <%= link_to "Back to courses", courses_path, class: "btn btn-secondary" %> |
+  <%= link_to 'Add New Week', new_course_week_path(@course), class: 'btn btn-primary' %> |
+  
   <p><%= button_to "Destroy this course", @course, method: :delete, class: "btn btn-dark" %></p>
 </div>
 
@@ -29,7 +29,7 @@
       <p>No files uploaded for this week.</p>
     <% end %>
 
-    <!-- Edit and Delete Links for the Week -->
+   
     <div class="week-actions">
       <%= link_to 'Edit Week', edit_course_week_path(@course, week), class: 'btn btn-secondary' %>
       <%= button_to 'Delete Week', course_week_path(@course, week), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
@@ -38,5 +38,5 @@
     <hr>
   <% end %>
 <% else %>
-  <p>No weeks have been added to this course yet.</p>
+  <p>No File have been added to this course yet.</p>
 <% end %>
