@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_27_223518) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_02_104040) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -45,6 +45,14 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_27_223518) do
     t.string "course_grading_criteria"
     t.string "courses_your_grade"
     t.string "course_comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
