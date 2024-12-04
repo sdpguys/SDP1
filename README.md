@@ -5,7 +5,9 @@ Server Running Instructions:
 3. rails db:migrate
 4. bundle install
 5. rails server
+
 Note: Check your ruby version by ruby -v, it must be at least 3.3.6
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
