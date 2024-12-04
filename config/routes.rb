@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create]
 
   get "/home/about", to: "home#about"
+  get '/favicon.ico', to: redirect(ActionController::Base.helpers.asset_path('faviconsdp.png'))
+
 
 
 
