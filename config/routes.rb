@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get "users/index"
+  end
   devise_for :users
   resources :courses do
     resources :weeks, only: [ :new, :create, :edit, :update, :destroy, :show ]
@@ -8,7 +11,10 @@ Rails.application.routes.draw do
 
   get "/home/about", to: "home#about"
   
-
+  namespace :admin do
+    resources :users, only: [:index, :edit, :update, :destroy]
+  
+  end
 
 
 

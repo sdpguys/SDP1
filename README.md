@@ -8,6 +8,10 @@ Server Running Instructions:
 
 Note: Check your ruby version by ruby -v, it must be at least 3.3.6
 
+Admin Credentials: admin@example.com
+                   password
+                   
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 

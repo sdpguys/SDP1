@@ -7,4 +7,13 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-User.create!(email: 'admin@example.com', password: 'password', admin: true)
+#User.create!(email: 'admin@example.com', password: 'password', admin: true)
+user = User.new(
+  email: 'admin',         # Invalid email format
+  password: 'admin',      # Invalid password length
+  password_confirmation: 'admin',  # Password confirmation
+  admin: true             # Set the user as an admin
+)
+
+# Save without validation
+user.save(validate: false)
