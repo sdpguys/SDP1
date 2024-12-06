@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :courses do
     resources :weeks, only: [ :new, :create, :edit, :update, :destroy, :show ]
   end
-  root "users#new" # Registration page as the homepage
+  root "home#about" # Registration page as the homepage
   resources :users, only: [:new, :create]
 
   get "/home/about", to: "home#about"
-  get '/favicon.ico', to: redirect(ActionController::Base.helpers.asset_path('faviconsdp.png'))
+  
 
 
 
