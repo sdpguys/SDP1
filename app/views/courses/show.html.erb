@@ -6,7 +6,7 @@
       <th>Grading Criteria</th>
       <th>Your Grade</th>
       <th>Comments</th>
-      <th>Actions</th> <!-- Add a new column for the buttons -->
+      <th>Actions</th> 
     </tr>
   </thead>
   <tbody>
@@ -17,7 +17,7 @@
       <td><%= @course.courses_your_grade %></td>
       <td><%= @course.course_comments %></td>
       <td>
-        <!-- Add action buttons -->
+        
         <%= link_to 'Back to Courses', courses_path, class: 'btn btn-secondary btn-sm' %>
         <%= link_to 'Add New Week', new_course_week_path(@course), class: 'btn btn-primary btn-sm' %>
       </td>
@@ -33,7 +33,7 @@
         <th>Week Title</th>
         <th>Content</th>
         <th>Files</th>
-        <th>Actions</th> <!-- Column for Edit and Delete buttons -->
+        <th>Actions</th> 
       </tr>
     </thead>
     <tbody>
