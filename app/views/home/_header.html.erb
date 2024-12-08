@@ -8,15 +8,15 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-      #################################################
+     
        # <%if user_signed_in?%>
-       #################################################
+     
           <li class="nav-item">
             <%= link_to "About Us", home_about_path, class:"nav-link" %>
         </li>
-######################################################
+
 #<% if current_user&.admin? %>
-####################################################
+
         <li class="nav-item">
             <%= link_to "Courses", 
             courses_path, 
@@ -30,9 +30,9 @@
             admin_users_path, 
             class:"nav-link" %>
         </li>
-    ##############################################
+    
      #  <% end %>
-     ###################################################
+  
     <li class="nav-item">
     <%= link_to "Sign Out", 
     destroy_user_session_path, 
@@ -43,9 +43,9 @@
         edit_user_registration_path, 
         class:"nav-link" %>
     </li>
-    ############################################
+ 
  #   <%else%>
- ############################################
+ 
  <li class="nav-item">
         <%= link_to "Sign In", 
         new_user_session_path, 
@@ -56,9 +56,9 @@
             new_user_registration_path, 
             class:"nav-link" %>
         </li>
-        ############################################
+      
       #  <%end%>
-      ############################################
+     
 
         
       </ul>
