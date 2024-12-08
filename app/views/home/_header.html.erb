@@ -9,13 +9,13 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
      
-       # <%if user_signed_in?%>
+       <%if user_signed_in?%>
      
           <li class="nav-item">
             <%= link_to "About Us", home_about_path, class:"nav-link" %>
         </li>
 
-#<% if current_user&.admin? %>
+<% if current_user&.admin? %>
 
         <li class="nav-item">
             <%= link_to "Courses", 
@@ -31,7 +31,7 @@
             class:"nav-link" %>
         </li>
     
-     #  <% end %>
+      <% end %>
   
     <li class="nav-item">
     <%= link_to "Sign Out", 
@@ -44,7 +44,7 @@
         class:"nav-link" %>
     </li>
  
- #   <%else%>
+  <%else%>
  
  <li class="nav-item">
         <%= link_to "Sign In", 
@@ -57,7 +57,7 @@
             class:"nav-link" %>
         </li>
       
-      #  <%end%>
+      <%end%>
      
 
         
