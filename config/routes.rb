@@ -7,21 +7,20 @@ Rails.application.routes.draw do
     resources :weeks, only: [ :new, :create, :edit, :update, :destroy, :show ]
   end
   root "home#about" # Registration page as the homepage
-  resources :users, only: [:new, :create]
+  resources :users, only: [ :new, :create ]
 
   get "/home/about", to: "home#about"
-  
+
   namespace :admin do
-    resources :users, only: [:index, :edit, :update, :destroy]
-  
+    resources :users, only: [ :index, :edit, :update, :destroy ]
   end
 
 
 
 
   get "home/about"
-# Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-#root "home#index"
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # root "home#index"
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check

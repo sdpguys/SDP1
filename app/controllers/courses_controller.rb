@@ -2,7 +2,7 @@ class CoursesController < ApplicationController
   # Use :set_course before the specified actions
   before_action :authenticate_user!
   #############################################################
-  #before_action :authenticate_admin!
+  # before_action :authenticate_admin!
   ############################################################
   before_action :set_course, only: [ :show, :edit, :update, :destroy ]
 
