@@ -1,18 +1,39 @@
-<h3>Week: <%= @week.title %></h3>
-<p><%= @week.content %></p>
-
-<% if @week.files.attached? %>
-  <h4>Files:</h4>
-  <ul>
-    <% @week.files.each do |file| %>
-      <li><%= link_to file.filename, url_for(file), target: "_blank" %></li>
-    <% end %>
-  </ul>
+<h2>Uploaded Weeks</h2>
+<% if @weeks.present? %>
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Week Title</th>
+        <th>Content</th>
+        <th>Files</th>
+        <th>Actions</th> <!-- Column for Edit and Delete buttons -->
+      </tr>
+    </thead>
+    <tbody>
+      <% @weeks.each do |week| %>
+        <tr>
+          <td><%= week.title %></td>
+          <td><%= week.content %></td>
+          <td>
+            <% if week.files.attached? %>
+              <ul>
+                <% week.files.each do |file| %>
+                  <li><%= link_to file.filename, url_for(file), target: "_blank" %></li>
+                <% end %>
+              </ul>
+            <% else %>
+              No files uploaded for this week.
+            <% end %>
+          </td>
+          <td>
+            <!-- Edit and Delete buttons -->
+            <%= link_to 'Edit Week', edit_course_week_path(@course, week), class: 'btn btn-secondary btn-sm' %>
+            <%= button_to 'Delete Week', course_week_path(@course, week), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% else %>
-  <p>No files uploaded for this week.</p>
+  <p>No weeks have been added to this course yet.</p>
 <% end %>
-
-<div class="week-actions">
-  <%= link_to 'Edit Week', edit_course_week_path(@course, @week), class: 'btn btn-secondary' %>
-  <%= link_to 'Delete Week', course_week_path(@course, @week), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-</div>
