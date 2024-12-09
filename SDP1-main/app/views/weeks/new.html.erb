@@ -1,0 +1,28 @@
+<% content_for :title, "New Week" %>
+
+<h1>New Week for <%= @course.course_name %></h1>
+
+<%= form_with(model: [@course, @week], local: true) do |f| %>
+  <div class="form-group">
+    <%= f.label :week_number, "Week Number" %>
+    <%= f.select :week_number, options_for_select((1..15).to_a), { prompt: "Select Week" }, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :content, "Description" %>
+    <%= f.text_area :content, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :files, "Files" %>
+    <%= f.file_field :files, multiple: true, class: "form-control" %>
+  </div>
+
+  <br/>
+  <%= f.submit "Save Week", class: "btn btn-primary" %>
+<% end %>

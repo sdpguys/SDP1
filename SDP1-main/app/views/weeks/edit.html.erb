@@ -1,0 +1,22 @@
+<% content_for :title, "Edit Week" %>
+
+<h1>Edit Week for <%= @course.course_name %></h1>
+
+<%= form_with model: [@course, @week], local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :content %>
+    <%= f.text_area :content, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :files %>
+    <%= f.file_field :files, multiple: true, class: "form-control" %>
+  </div>
+
+  <%= f.submit "Update Week", class: "btn btn-primary" %>
+<% end %>

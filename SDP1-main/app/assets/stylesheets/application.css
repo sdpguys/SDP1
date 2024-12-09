@@ -1,0 +1,49 @@
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ *//* General button styling */
+.btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  /* Edit button styling */
+  .btn-edit {
+    background-color: #007bff; /* Blue */
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-edit:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Delete button styling */
+  .btn-delete {
+    background-color: #dc3545; /* Red */
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-delete:hover {
+    background-color: #a71d2a;
+  }
+  
+  /* Divider between weeks */
+.week-divider {
+  border-bottom: 1px solid #ccc; /* Light grey line */
+  margin: 20px 0; /* Space above and below the divider */
+  padding-bottom: 10px; /* Adds padding below the divider */
+}
