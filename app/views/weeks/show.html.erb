@@ -27,8 +27,10 @@
           </td>
           <td>
             <!-- Edit and Delete buttons -->
-            <%= link_to 'Edit Week', edit_course_week_path(@course, week), class: 'btn btn-secondary btn-sm' %>
+            <%= link_to 'Edit Week1', edit_course_week_path(@course, week), class: 'btn btn-secondary btn-sm' %>
             <%= button_to 'Delete Week', course_week_path(@course, week), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+            <%= button_to 'Generate Quiz', generate_quiz_path(week_id: week.id), method: :get, class: 'btn btn-primary btn-sm', target: '_blank' %>
+
           </td>
         </tr>
       <% end %>
