@@ -4,7 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable
          scope :admins, -> { where(admin: true) }
-
+         has_many :user_courses
+         has_many :courses, through: :user_courses
          # Method to check if the user is an admin
          def admin?
            self.admin

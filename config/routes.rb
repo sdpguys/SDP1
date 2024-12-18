@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'dashboard/index'
+  resources :user_courses, only: [:create, :destroy]  # For adding and removing courses
+  get 'dashboard', to: 'dashboard#index'             # Dashboard route
+  resources :courses   
   namespace :admin do
     get "users/index"
   end
@@ -14,7 +18,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users, only: [ :index, :edit, :update, :destroy ]
   end
-
+ 
 
 
 

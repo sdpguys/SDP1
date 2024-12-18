@@ -1,0 +1,50 @@
+<div style="width: 90%; max-width: 1200px; margin: 20px auto; background: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); font-family: Arial, sans-serif;">
+  
+  <h1 style="text-align: center; font-size: 2.2em; color: #333; margin-bottom: 20px;">Dashboard</h1>
+
+  <h2 style="font-size: 1.8em; color: #555; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px;">Your Taken Courses</h2>
+  
+  <% if @taken_courses.any? %>
+    <ul style="list-style-type: none; padding-left: 0;">
+      <% @taken_courses.each do |course| %>
+        <li style="background-color: #ffffff; padding: 15px; margin-bottom: 10px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
+          <h3 style="font-size: 1.3em; color: #007bff; margin-bottom: 5px;">
+            <%= link_to course.course_name, course_path(course), style: "color: #007bff; text-decoration: none;" %> 
+          </h3>
+          <p style="font-size: 1em; color: #555; margin: 5px 0;">Instructor: <%= course.course_instructor %></p>
+          <%= button_to "Remove", user_course_path(course), method: :delete, data: { confirm: "Are you sure you want to remove this course?" }, style: "padding: 8px 15px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;" %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p style="font-size: 1.2em; color: #555;">You have not taken any courses yet.</p>
+  <% end %>
+
+  <h2 style="font-size: 1.8em; color: #555; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px;">Available Courses</h2>
+  
+  <% if @available_courses.any? %>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px; background-color: #ffffff;">
+      <thead>
+        <tr style="background-color: #007bff; color: white; text-align: left;">
+          <th style="padding: 10px 15px;">Course Name</th>
+          <th style="padding: 10px 15px;">Instructor</th>
+          <th style="padding: 10px 15px;">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @available_courses.each do |course| %>
+          <tr style="border-bottom: 1px solid #ddd;">
+            <td style="padding: 10px 15px; color: #555;"><%= course.course_name %></td>
+            <td style="padding: 10px 15px; color: #555;"><%= course.course_instructor %></td>
+            <td style="padding: 10px 15px;">
+              <%= button_to "Take Course", user_courses_path(course_id: course.id), method: :post, style: "padding: 8px 15px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p style="font-size: 1.2em; color: #555;">No courses are currently available.</p>
+  <% end %>
+  
+</div>
