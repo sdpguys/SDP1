@@ -30,7 +30,11 @@
             admin_users_path, 
             class:"nav-link" %>
         </li>
-    
+        <li class="nav-item">
+        <%= link_to "Announcements", 
+        admin_notifications_new_path, 
+        class:"nav-link" %>
+    </li>
       <% end %>
   
     <li class="nav-item">
@@ -41,6 +45,11 @@
     <%= link_to "Dashboard", 
     dashboard_index_path, 
     class:"nav-link" %>
+       <div class="notifications">
+      <%= link_to notifications_path do %>
+        <span>Notifications <%= unread_notifications_count(current_user) %></span>
+      <% end %>
+    </div>
 
 </li>
 <li class="nav-item">

@@ -1,0 +1,30 @@
+<h1 style="text-align: center; margin-bottom: 30px;">Send a Notification to All Users</h1>
+
+<%= form_with(model: @notification, url: admin_notifications_path, local: true) do |form| %>
+  <% if @notification.errors.any? %>
+    <div style="border: 1px solid red; background-color: #f8d7da; padding: 10px; margin-bottom: 20px;">
+      <h2 style="color: red; font-size: 18px;"><%= pluralize(@notification.errors.count, "error") %> prohibited this notification from being saved:</h2>
+      <ul style="color: red; font-size: 16px;">
+        <% @notification.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :title, "Notification Title", style: "font-weight: bold; font-size: 16px;" %>
+    <%= form.text_field :title, style: "width: 100%; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" %>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :message, "Notification Message", style: "font-weight: bold; font-size: 16px;" %>
+    <%= form.text_area :message, style: "width: 100%; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; height: 150px;" %>
+  </div>
+
+  <div style="text-align: center;">
+    <%= form.submit "Send Announcement", style: "background-color: #4CAF50; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer;" %>
+  </div>
+<% end %>
+
+<%= link_to 'Back to Dashboard', dashboard_path, style: "display: block; text-align: center; margin-top: 30px; font-size: 16px; color: #007bff;" %>

@@ -1,9 +1,18 @@
 Rails.application.routes.draw do
+  get "notifications/index"
   get 'dashboard/index'
+  resources :notifications, only: [:index, :show, :destroy]
+
+
+  namespace :admin do
+    resources :notifications, only: [:new, :create]
+  end  
   resources :user_courses, only: [:create, :destroy]  # For adding and removing courses
   get 'dashboard', to: 'dashboard#index'             # Dashboard route
   resources :courses   
   namespace :admin do
+    get "notifications/new"
+    get "notifications/create"
     get "users/index"
   end
   devise_for :users
