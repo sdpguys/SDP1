@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz Generator Platform</title>
+</head>
+<body>
+  <h1>Quiz Generator Platform</h1>
+
+  <!-- Part 1: Generate Code -->
+  <section id="generateInstructions">
+    <h2>Generate Quiz Instructions</h2>
+    <textarea id="content" style="width: 100%; height: 100px;" readonly>
+      Please generate 10 multiple-choice questions with the following subjects in .HTML format.
+      Please download as an .HTML file that allows answering each question and evaluates the whole test when "Submit" is pressed.
+
+      Example Subject: Introduction to Databases, Normalization Techniques.
+    </textarea>
+    <p>Instructions for ChatGPT:</p>
+    <p>
+      Please generate a 10-question multiple-choice quiz based on the provided content.
+      Format the quiz in HTML with a form for submission, ensuring each question has four options,
+      and include the correct answer as a `data-correct` attribute for each correct option.
+    </p>
+    <button id="openTabButton">Copy Content and Open ChatGPT</button>
+    <button id="downloadInstructionsButton">Download Instructions</button>
+  </section>
+
+  <!-- Part 2: Validate and Generate Quiz -->
+  <section id="validateQuiz" style="margin-top: 20px;">
+    <h2>Generate and Download Quiz</h2>
+    <p>1. Copy the generated HTML code of the quiz from ChatGPT.</p>
+    <p>2. Paste the code below and click "Submit and Download Quiz".</p>
+    <p>3. The quiz will be validated and automatically downloaded as an HTML file.</p>
+    <textarea id="quizCodeInput" style="width: 100%; height: 150px;"></textarea>
+    <button id="submitQuizButton">Submit and Download Quiz</button>
+  </section>
+
+  <script>
+    // Part 1: Generate Code
+    document.getElementById('openTabButton').addEventListener('click', function () {
+      const content = document.getElementById('content').value;
+      const fullMessage = `Please create a 10-question quiz about the following content in HTML format:\n\n"${content}"`;
+      navigator.clipboard.writeText(fullMessage).then(() => {
+        alert("Content and instructions copied to clipboard. Please paste it into ChatGPT!");
+      }).catch(err => {
+        alert("Failed to copy content: " + err);
+      });
+      window.open('https://chat.openai.com/', '_blank');
+    });
+
+    document.getElementById('downloadInstructionsButton').addEventListener('click', function () {
+      const content = document.getElementById('content').value;
+      const htmlContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Generated Quiz Instructions</title>
+        </head>
+        <body>
+          <h1>Generated Quiz Instructions</h1>
+          <p>Please create a 10-question quiz about the following content:</p>
+          <p>${content}</p>
+          <p>Format the quiz in HTML, ensuring each question has four options and includes a correct answer.</p>
+        </body>
+        </html>
+      `;
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'quiz_instructions.html';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    // Part 2: Validate and Generate Quiz
+    document.getElementById('submitQuizButton').addEventListener('click', function () {
+      const quizContent = document.getElementById('quizCodeInput').value;
+
+      if (!quizContent.trim()) {
+        alert('Please paste the generated quiz HTML code.');
+        return;
+      }
+
+      const blob = new Blob([quizContent], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'Generated_Quiz.html'; // Default name for the generated quiz file
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+  </script>
+</body>
+</html>
