@@ -1,0 +1,17 @@
+<h1>Quiz for <%= @week.title %></h1>
+
+<% if @questions.present? %>
+  <% @questions.each_with_index do |q, index| %>
+    <div>
+      <p><strong>Question <%= index + 1 %>: <%= q['question'] %></strong></p>
+      <% q['options'].each do |option| %>
+        <label>
+          <input type="radio" name="question_<%= index %>" value="<%= option %>">
+          <%= option %>
+        </label>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <p>No questions were generated. Please check the content or API response.</p>
+<% end %>

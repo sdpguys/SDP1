@@ -20,6 +20,11 @@ class CoursesController < ApplicationController
   def new
     @course = Course.new
   end
+  def show
+    @course = Course.find(params[:id])
+    @weeks = @course.weeks
+  end
+
 
   # GET /courses/1/edit
   def edit
