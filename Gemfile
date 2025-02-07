@@ -26,7 +26,9 @@ gem 'dotenv-rails', groups: [:development, :test]
 
 
 
-
+# platform :mingw_25 do
+#   gem "selenium-webdriver"
+# end
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -73,3 +75,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "openai", "~> 0.3.0"

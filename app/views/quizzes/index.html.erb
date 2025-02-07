@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .quiz-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .question {
+      font-size: 18px;
+      margin: 15px 0;
+    }
+    .options {
+      margin: 10px 0;
+    }
+    .options input {
+      margin-right: 10px;
+    }
+    .submit-btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .submit-btn:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h2>Quiz</h2>
+    
+    <div id="quiz-questions"></div>
+
+    <button class="submit-btn" onclick="submitAnswers()">Submit Answers</button>
+
+    <div id="result" style="display: none; margin-top: 20px;"></div>
+  </div>
+
+  <script>
+    // Fetch quiz data from the backend
+    async function fetchQuiz() {
+      const response = await fetch('/generate_quiz?topic=general%20knowledge');
+      const quizData = await response.json();
+
+      const quizContainer = document.getElementById('quiz-questions');
+      quizContainer.innerHTML = '';
+
+      quizData.forEach((quiz, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.classList.add('question');
+
+        questionDiv.innerHTML = `
+          <p><strong>${quiz.question}</strong></p>
+          <div class="options">
+            ${quiz.options.map((option, i) => `
+              <label>
+                <input type="radio" name="question-${index}" value="${option}" />
+                ${option}
+              </label><br>
+            `).join('')}
+          </div>
+        `;
+
+        quizContainer.appendChild(questionDiv);
+      });
+    }
+
+    // Submit answers and check them
+    async function submitAnswers() {
+      const answers = {};
+      const quizData = document.querySelectorAll('.question');
+
+      quizData.forEach((questionDiv, index) => {
+        const selectedOption = questionDiv.querySelector('input[type="radio"]:checked');
+        if (selectedOption) {
+          answers[index + 1] = selectedOption.value;
+        }
+      });
+
+      const response = await fetch('/check_answers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ answers })
+      });
+
+      const resultData = await response.json();
+      displayResult(resultData);
+    }
+
+    // Display the result
+    function displayResult(results) {
+      const resultContainer = document.getElementById('result');
+      resultContainer.innerHTML = `<h3>Results</h3>`;
+
+      results.forEach(result => {
+        const resultDiv = document.createElement('div');
+        resultDiv.innerHTML = `
+          <p>${result.question}</p>
+          <p>Your answer: ${result.selected_answer}</p>
+          <p>Correct answer: ${result.correct_answer}</p>
+          <p style="color: ${result.correct ? 'green' : 'red'};">${result.correct ? 'Correct' : 'Incorrect'}</p>
+        `;
+        resultContainer.appendChild(resultDiv);
+      });
+
+      resultContainer.style.display = 'block';
+    }
+
+    // Fetch quiz data when the page loads
+    window.onload = fetchQuiz;
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<h1>Generate a Quiz</h1>
+
+
+<hr>
+
+<% if @questions.present? %>
+  <h2>Quiz on "<%= @topic %>"</h2>
+  <form id="quiz-form">
+    <% @questions.each_with_index do |question, index| %>
+      <div class="quiz-question">
+        <h3>Question <%= index + 1 %>: <%= question[:question] %></h3>
+
+        <% if question[:choices].is_a?(Hash) %>
+          <% question[:choices].each do |key, choice| %>
+            <label>
+              <input type="radio" name="question_<%= index %>" value="<%= key %>">
+              <%= key %>. <%= choice %>
+            </label><br>
+          <% end %>
+        <% elsif question[:choices].is_a?(Array) %>
+          <% question[:choices].each_with_index do |choice, choice_index| %>
+            <% option_letter = ('A'.ord + choice_index).chr %>
+            <label>
+              <input type="radio" name="question_<%= index %>" value="<%= option_letter %>">
+              <%= option_letter %>. <%= choice %>
+            </label><br>
+          <% end %>
+        <% end %>
+      </div>
+      <hr>
+    <% end %>
+
+    <button type="button" onclick="checkAnswers()">Submit Answers</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    function checkAnswers() {
+      let correctAnswers = <%= @questions.map { |q| q[:correct] }.to_json.html_safe %>;
+      let score = 0;
+      
+      correctAnswers.forEach((answer, index) => {
+        let selected = document.querySelector(`input[name="question_${index}"]:checked`);
+        if (selected && selected.value === answer) {
+          score++;
+        }
+      });
+
+      document.getElementById("result").innerHTML = `<h2>You got ${score} out of ${correctAnswers.length} correct!</h2>`;
+    }
+  </script>
+
+<% else %>
+  <p>No questions generated. Please try again.</p>
+<% end %>

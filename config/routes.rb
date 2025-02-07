@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
+  
   get "notifications/index"
   get "dashboard/index"
+  resources :quizzes, only: [:index]
+  
   resources :notifications, only: [ :index, :show, :destroy ]
-
+  # API Endpoints
+  get 'generate_quiz', to: 'quizzes#generate'
+  post 'check_answers', to: 'quizzes#check_answers'
 
   namespace :admin do
     resources :notifications, only: [ :new, :create ]
