@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_03_113157) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_13_193458) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -65,6 +65,34 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_03_113157) do
     t.text "options"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "week_id"
+    t.integer "course_id"
+    t.index ["course_id"], name: "index_quizzes_on_course_id"
+    t.index ["week_id"], name: "index_quizzes_on_week_id"
+  end
+
+  create_table "quizzesheres", force: :cascade do |t|
+    t.string "question"
+    t.text "options"
+    t.string "answer"
+    t.integer "week_id", null: false
+    t.integer "course_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_quizzesheres_on_course_id"
+    t.index ["week_id"], name: "index_quizzesheres_on_week_id"
+  end
+
+  create_table "quizzestheres", force: :cascade do |t|
+    t.string "question"
+    t.text "options", default: ""
+    t.string "answer", default: ""
+    t.integer "week_id"
+    t.integer "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_quizzestheres_on_course_id"
+    t.index ["week_id"], name: "index_quizzestheres_on_week_id"
   end
 
   create_table "user_courses", force: :cascade do |t|
@@ -106,6 +134,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_03_113157) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "notifications", "users"
+  add_foreign_key "quizzes", "courses"
+  add_foreign_key "quizzes", "weeks"
+  add_foreign_key "quizzesheres", "courses"
+  add_foreign_key "quizzesheres", "weeks"
+  add_foreign_key "quizzestheres", "courses"
+  add_foreign_key "quizzestheres", "weeks"
   add_foreign_key "user_courses", "courses"
   add_foreign_key "user_courses", "users"
   add_foreign_key "weeks", "courses"

@@ -6,7 +6,7 @@
 <body>
   <h2>Quiz</h2>
 
-  <form>
+  <form id="quizForm">
     <% @questions.each_with_index do |question_text, index| %>
       <% question_lines = question_text.split("\n") %>
 
@@ -22,6 +22,11 @@
 
         <!-- Store correct answer as hidden input -->
         <input type="hidden" name="correct_<%= index %>" value="<%= question_lines.last.split(': ').last.strip %>">
+        
+        <!-- Area to display the correct answer after quiz submission -->
+        <p id="answer_<%= index %>" style="display:none;">
+          <strong>Correct Answer: <%= question_lines.last.split(': ').last.strip %></strong>
+        </p>
       </div>
       <hr>
     <% end %>
@@ -43,8 +48,12 @@
         if (selected && selected.value === correct) {
           score++;
         }
+
+        // Show the correct answer next to the question
+        document.getElementById('answer_' + i).style.display = "block";
       }
 
+      // Display the user's score
       document.getElementById('result').innerHTML = "Your score: " + score + " / " + totalQuestions;
       document.getElementById('result').style.display = "block";
     }
