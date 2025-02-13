@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .question { font-weight: bold; margin-top: 20px; }
+    .hidden { display: none; }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+    .score { font-size: 20px; margin-top: 20px; }
+    button { margin-top: 10px; padding: 8px 12px; font-size: 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Quiz</h1>
+  <form id="quiz-form">
+    <ol>
+<li class='question'>Question: Which of the following mathematical concepts is defined as the reverse process of differentiation?
+</li>
+<ul>
+<li><label><input type='radio' name='q0' value='A'> A. Integration</label></li>
+<li><label><input type='radio' name='q0' value='B'> B. Functions</label></li>
+<li><label><input type='radio' name='q0' value='C'> C. Limits</label></li>
+<li><label><input type='radio' name='q0' value='D'> D. Differentiation
+</label></li>
+<li class='hidden' id='correct-q0'>Correct Answer: <span class='correct'>A</span></li>
+</ul>
+    </ol>
+    <button type="button" onclick="submitQuiz()">Submit</button>
+  </form>
+  <div id="score" class="score hidden"></div>
+
+  <script>
+    function submitQuiz() {
+      let score = 0;
+      let totalQuestions = 1;
+
+      for (let i = 0; i < totalQuestions; i++) {
+        let selected = document.querySelector('input[name="q' + i + '"]:checked');
+        let correct = document.getElementById('correct-q' + i);
+
+        if (selected) {
+          if (selected.value === correct.querySelector('.correct').innerText) {
+            score++;
+          } else {
+            selected.parentElement.classList.add('incorrect');
+          }
+        }
+        correct.classList.remove('hidden');
+      }
+
+      document.getElementById('score').innerHTML = "Your Score: " + score + " / " + totalQuestions;
+      document.getElementById('score').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

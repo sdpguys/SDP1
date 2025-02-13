@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz</title>
+</head>
+<body>
+  <h2>Quiz</h2>
+
+  <form>
+    <% @questions.each_with_index do |question_text, index| %>
+      <% question_lines = question_text.split("\n") %>
+
+      <div>
+        <p><strong>Q<%= index + 1 %>: <%= question_lines.first %></strong></p>
+
+        <% question_lines[2..5].each do |choice| %>
+          <label>
+            <input type="radio" name="question_<%= index %>" value="<%= choice[0] %>">
+            <%= choice %>
+          </label><br>
+        <% end %>
+
+        <!-- Store correct answer as hidden input -->
+        <input type="hidden" name="correct_<%= index %>" value="<%= question_lines.last.split(': ').last.strip %>">
+      </div>
+      <hr>
+    <% end %>
+
+    <button type="button" onclick="submitQuiz()">Submit Quiz</button>
+  </form>
+
+  <h3 id="result" style="display:none;"></h3>
+
+  <script>
+    function submitQuiz() {
+      let totalQuestions = <%= @questions.size %>;
+      let score = 0;
+
+      for (let i = 0; i < totalQuestions; i++) {
+        let selected = document.querySelector('input[name="question_' + i + '"]:checked');
+        let correct = document.querySelector('input[name="correct_' + i + '"]').value;
+
+        if (selected && selected.value === correct) {
+          score++;
+        }
+      }
+
+      document.getElementById('result').innerHTML = "Your score: " + score + " / " + totalQuestions;
+      document.getElementById('result').style.display = "block";
+    }
+  </script>
+</body>
+</html>

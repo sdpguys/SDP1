@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  
+  get 'quiz/generate', to: 'quizzes#generate'
+  get 'generate_quiz/:week_id', to: 'quizzes#generate', as: 'generate_quiz'
+
   get "notifications/index"
   get "dashboard/index"
   resources :quizzes, only: [:index]

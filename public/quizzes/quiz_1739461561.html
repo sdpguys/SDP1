@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Introduction to Postgres interactive environment. Learning basic SQL commands with the examples. Understanding the relational algebra on SQL examples. Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .question { font-weight: bold; margin-top: 20px; }
+    .hidden { display: none; }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+    .score { font-size: 20px; margin-top: 20px; }
+    button { margin-top: 10px; padding: 8px 12px; font-size: 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Introduction to Postgres interactive environment. Learning basic SQL commands with the examples. Understanding the relational algebra on SQL examples. Quiz</h1>
+  <form id="quiz-form">
+    <ol>
+<li class='question'>Question: What is the primary focus of the introduction to Postgres interactive environment?
+</li>
+<ul>
+<li><label><input type='radio' name='q0' value='A'> A. Learning advanced SQL commands</label></li>
+<li><label><input type='radio' name='q0' value='B'> B. Integrating Postgres with other database systems</label></li>
+<li><label><input type='radio' name='q0' value='C'> C. Learning basic SQL commands and understanding relational algebra through examples</label></li>
+<li><label><input type='radio' name='q0' value='D'> D. Developing interactive web applications using Postgres
+</label></li>
+<li class='hidden' id='correct-q0'>Correct Answer: <span class='correct'>C</span></li>
+</ul>
+<li class='question'>Question: What is the primary focus of an introduction to the Postgres interactive environment?
+</li>
+<ul>
+<li><label><input type='radio' name='q1' value='A'> A. Learning advanced Java scripts</label></li>
+<li><label><input type='radio' name='q1' value='B'> B. Understanding the relational algebra using SQL examples</label></li>
+<li><label><input type='radio' name='q1' value='C'> C. Learning how to use HTML tags</label></li>
+<li><label><input type='radio' name='q1' value='D'> D. Creating and managing Excel spreadsheets
+</label></li>
+<li class='hidden' id='correct-q1'>Correct Answer: <span class='correct'>B</span></li>
+</ul>
+<li class='question'>Question: What is the primary focus of the content "Introduction to Postgres interactive environment"?
+</li>
+<ul>
+<li><label><input type='radio' name='q2' value='A'> A. Learning advanced SQL commands</label></li>
+<li><label><input type='radio' name='q2' value='B'> B. Understanding relational algebra through SQL examples</label></li>
+<li><label><input type='radio' name='q2' value='C'> C. Introduction to Python interactive environment</label></li>
+<li><label><input type='radio' name='q2' value='D'> D. Learning about non-relational databases
+</label></li>
+<li class='hidden' id='correct-q2'>Correct Answer: <span class='correct'>B</span></li>
+</ul>
+    </ol>
+    <button type="button" onclick="submitQuiz()">Submit</button>
+  </form>
+  <div id="score" class="score hidden"></div>
+
+  <script>
+    function submitQuiz() {
+      let score = 0;
+      let totalQuestions = 3;
+
+      for (let i = 0; i < totalQuestions; i++) {
+        let selected = document.querySelector('input[name="q' + i + '"]:checked');
+        let correct = document.getElementById('correct-q' + i);
+
+        if (selected) {
+          if (selected.value === correct.querySelector('.correct').innerText) {
+            score++;
+          } else {
+            selected.parentElement.classList.add('incorrect');
+          }
+        }
+        correct.classList.remove('hidden');
+      }
+
+      document.getElementById('score').innerHTML = "Your Score: " + score + " / " + totalQuestions;
+      document.getElementById('score').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
