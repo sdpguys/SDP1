@@ -1,6 +1,6 @@
 class Quiz < ApplicationRecord
   validates :question, :answer, :options, presence: true
-  belongs_to :week
+ belongs_to :week
   belongs_to :course
   # Store the options as a JSON string in the database
   def options=(value)

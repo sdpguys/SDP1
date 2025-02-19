@@ -7,13 +7,11 @@
   <h2>Quiz</h2>
 
   <form id="quizForm">
-    <% @questions.each_with_index do |question_text, index| %>
-      <% question_lines = question_text.split("\n") %>
-
+    <% @questions.each_with_index do |quiz, index| %>
       <div>
-        <p><strong>Q<%= index + 1 %>: <%= question_lines.first %></strong></p>
+        <p><strong>Q<%= index + 1 %>: <%= quiz.question %></strong></p>
 
-        <% question_lines[2..5].each do |choice| %>
+        <% JSON.parse(quiz.options).each do |choice| %>
           <label>
             <input type="radio" name="question_<%= index %>" value="<%= choice[0] %>">
             <%= choice %>
@@ -21,11 +19,11 @@
         <% end %>
 
         <!-- Store correct answer as hidden input -->
-        <input type="hidden" name="correct_<%= index %>" value="<%= question_lines.last.split(': ').last.strip %>">
+        <input type="hidden" name="correct_<%= index %>" value="<%= quiz.answer %>">
         
         <!-- Area to display the correct answer after quiz submission -->
         <p id="answer_<%= index %>" style="display:none;">
-          <strong>Correct Answer: <%= question_lines.last.split(': ').last.strip %></strong>
+          <strong>Correct Answer: <%= quiz.answer %></strong>
         </p>
       </div>
       <hr>

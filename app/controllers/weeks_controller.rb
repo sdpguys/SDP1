@@ -28,9 +28,13 @@ class WeeksController < ApplicationController
   def show; end
 
   def destroy
+    # Delete any dependent records that reference this week
+    @week.quizzes.destroy_all if @week.quizzes.any?
+    # You can also add other dependent models here
     @week.destroy
     redirect_to course_path(@course), notice: "Week deleted successfully."
   end
+  
 
   def generate_quiz
     puts "API Key: #{ENV['OPENAI_API_KEY']}"
