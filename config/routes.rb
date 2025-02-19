@@ -46,7 +46,12 @@ Rails.application.routes.draw do
       get :generate_quiz_html
     end
   end
-
+  resources :courses do
+    member do
+      delete :destroy
+    end
+  end
+  
   resources :courses do
     resources :weeks
   end

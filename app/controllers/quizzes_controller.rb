@@ -16,7 +16,7 @@ class QuizzesController < ApplicationController
           parameters: {
             model: "gpt-3.5-turbo",
             messages: [
-              { role: "system", content: "You are a quiz generator. Generate a single multiple-choice question based on the topic: #{@topic}. Provide four answer choices (A, B, C, D). At the end, indicate the correct answer like this: Correct Answer: A/B/C/D. No other format is permitted for correct variant. NO space between variants" },
+              { role: "system", content: "You are a quiz generator. Generate a single multiple-choice question based on the topic: #{@topic}. Provide four answer choices (A, B, C, D). At the end, indicate the correct answer like this: Correct Answer: A/B/C/D. No other format is permitted for correct variant. NO space between variants. Example: Question,skip one line, four variants without skipping lines between them, skip one line, correct answer" },
               { role: "user", content: "Generate a multiple-choice question on #{@topic}." }
             ],
             temperature: 0.7
