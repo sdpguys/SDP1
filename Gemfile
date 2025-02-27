@@ -19,6 +19,8 @@ gem "jbuilder"
 
 
 
+
+
 gem 'ruby-openai', git: 'https://github.com/alexrudall/ruby-openai', branch: 'main'
 
 
