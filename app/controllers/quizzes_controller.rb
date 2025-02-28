@@ -1,108 +1,100 @@
-class QuizzesController < ApplicationController
-  def generate
-    client = OpenAI::Client.new(access_token: ENV["OPENAI_API_KEY"])
-    week = Week.find(params[:week_id])
-    @topic = week.content.presence || "General Knowledge"
+def generate
+  client = OpenAI::Client.new(access_token: ENV["OPENAI_API_KEY"])
 
-    # Desired total quiz questions
-    total_questions_needed = 10
+  # Find the week record
+  week = Week.find(params[:week_id])
 
-    # Fetch existing DB questions for this week
-    database_questions = Quizzesthat.where(week: week).order("RANDOM()").limit(5).to_a
+  # Use the week.content as the main topic or text to generate questions about
+  lesson_text = week.content.presence || "General Knowledge"
 
-    # Calculate how many more to generate
-    remaining_questions_needed = total_questions_needed - database_questions.size
+  Rails.logger.debug "Generating quiz for Week ID=#{week.id} with content: #{lesson_text.inspect}"
 
-    Rails.logger.debug "Found #{database_questions.size} existing questions. " \
-                       "Need #{remaining_questions_needed} more for week #{week.id}."
+  # Decide how many total questions you want
+  total_questions_needed = 10
 
-    generated_questions = []
+  # Fetch existing DB questions for this week
+  database_questions = Quizzesthat.where(week: week).order("RANDOM()").limit(5).to_a
+  remaining_questions_needed = total_questions_needed - database_questions.size
 
-    # Generate only if we still need more
-    if remaining_questions_needed.positive?
-      Rails.logger.debug "Generating #{remaining_questions_needed} new question(s)."
+  generated_questions = []
 
-      remaining_questions_needed.times do |i|
-        begin
-          Rails.logger.debug("OpenAI request for question #{i+1} of #{remaining_questions_needed}")
+  if remaining_questions_needed.positive?
+    remaining_questions_needed.times do
+      begin
+        # Make a request to GPT, passing the lesson_text as context
+        response = client.chat(
+          parameters: {
+            model: "gpt-3.5-turbo",
+            messages: [
+              {
+                role: "system",
+                content: <<~PROMPT
+                  You are a quiz generator. Create exactly ONE multiple-choice question based on the following content:
 
-          # Make OpenAI API call
-          response = client.chat(
-            parameters: {
-              model: "gpt-3.5-turbo",
-              messages: [
-                {
-                  role: "system",
-                  content: <<~PROMPT
-                    You are a quiz generator. Generate 1 multiple-choice question about #{@topic}.
-                    Format must be:
-                    1) Question text
-                    2) A blank line
-                    3) Four lines: A), B), C), D)
-                    4) A blank line
-                    5) Correct Answer: X (X in [A,B,C,D])
-                  PROMPT
-                },
-                {
-                  role: "user",
-                  content: "Generate the question now."
-                }
-              ],
-              temperature: 0.7
-            }
-          )
+                  "#{lesson_text}"
 
-          # Parse GPT response
-          question_text = response.dig("choices", 0, "message", "content")
+                  FORMAT:
+                  1) One line with the question text.
+                  2) A blank line.
+                  3) Four lines labeled A), B), C), D) with possible answers.
+                  4) A blank line.
+                  5) "Correct Answer: X" (X is A, B, C, or D).
 
-          if question_text.present?
-            lines = question_text.strip.split("\n")
-            question_line = lines[0]
-            option_lines  = lines[2..5] || []
-            answer_line   = lines[7]
+                  No extra text or commentary. Just follow the format strictly.
+                PROMPT
+              },
+              {
+                role: "user",
+                content: "Generate the quiz question now."
+              }
+            ],
+            temperature: 0.7
+          }
+        )
 
-            # Validate minimal format
-            if question_line.blank? || option_lines.size < 4 || answer_line.blank?
-              Rails.logger.error "Malformed GPT response, skipping question."
-              next
-            end
+        question_text = response.dig("choices", 0, "message", "content")
+        Rails.logger.debug("GPT response for Week #{week.id}: #{question_text}")
 
-            correct_answer = answer_line.split(":").last&.strip
-            unless correct_answer&.match?(/\A[ABCD]\z/i)
-              Rails.logger.error "Invalid correct answer '#{correct_answer}', skipping."
-              next
-            end
+        # Parse the response (similar logic as before)
+        if question_text.present?
+          lines = question_text.strip.split("\n")
+          question_line = lines[0]
+          option_lines  = lines[2..5] || []
+          answer_line   = lines[7]
 
-            # Create the question in DB
-            new_question = Quizzesthat.create!(
-              question: question_line,
-              answer: correct_answer,
-              options: option_lines.to_json,
-              week: week,
-              course: week.course
-            )
-
-            Rails.logger.debug("Created Quizzesthat ID=#{new_question.id}")
-            generated_questions << new_question
-          else
-            Rails.logger.error "Empty GPT response."
+          # Minimal validation checks
+          if question_line.blank? || option_lines.size < 4 || answer_line.blank?
+            Rails.logger.error "Malformed GPT response for week #{week.id}, skipping."
+            next
           end
 
-        rescue => e
-          Rails.logger.error("Error creating question: #{e.message}")
-          next
+          correct_answer = answer_line.split(":").last&.strip
+          unless correct_answer&.match?(/\A[ABCD]\z/i)
+            Rails.logger.error "Invalid correct answer '#{correct_answer}', skipping."
+            next
+          end
+
+          # Create the question in the DB
+          new_question = Quizzesthat.create!(
+            question: question_line,
+            answer: correct_answer,
+            options: option_lines.to_json,
+            week: week,
+            course: week.course
+          )
+
+          generated_questions << new_question
+        else
+          Rails.logger.error "Empty GPT response for week #{week.id}, skipping."
         end
+
+      rescue => e
+        Rails.logger.error("Error generating question for week #{week.id}: #{e.message}")
+        next
       end
-    else
-      Rails.logger.debug "No new questions needed; DB already has enough."
     end
-
-    # Combine existing + newly generated
-    @questions = (database_questions + generated_questions).shuffle
-
-    Rails.logger.debug "Final question count: #{@questions.size}"
-
-    # Render or redirect to a quiz view
-    render "quizzes/download_quiz"
   end
+
+  @questions = (database_questions + generated_questions).shuffle
+  render "quizzes/download_quiz"
 end

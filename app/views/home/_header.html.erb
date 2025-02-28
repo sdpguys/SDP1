@@ -1,86 +1,75 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <%= link_to "Teaching Assistant", root_path, class:"navbar-brand" %>
+    <%= link_to "Teaching Assistant", root_path, class: "navbar-brand me-1" %>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-     
-       <%if user_signed_in?%>
-     
+      <!-- Left-aligned navigation -->
+      <ul class="navbar-nav me-1">
+        <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to "About Us", home_about_path, class:"nav-link" %>
-        </li>
+            <%= link_to "About Us", home_about_path, class: "nav-link" %>
+          </li>
 
-<% if current_user&.admin? %>
-
-        <li class="nav-item">
-            <%= link_to "Courses", 
-            courses_path, 
-            class:"nav-link" %>
-        </li>
-<li class="nav-item">
-            <%= link_to "New Course", new_course_path, class:"nav-link" %>
-        </li>
-       <li class="nav-item">
-            <%= link_to "User List", 
-            admin_users_path, 
-            class:"nav-link" %>
-        </li>
-        <li class="nav-item">
-        <%= link_to "Announcements", 
-        admin_notifications_new_path, 
-        class:"nav-link" %>
-    </li>
-      <% end %>
-  
-    <li class="nav-item">
-    <%= link_to "Sign Out", 
-    destroy_user_session_path, 
-    class:"nav-link" %>
-      <li class="nav-item">
-    <%= link_to "Dashboard", 
-    dashboard_index_path, 
-    class:"nav-link" %>
-       <div class="notifications">
-      <%= link_to notifications_path do %>
-        <span>Notifications <%= unread_notifications_count(current_user) %></span>
-      <% end %>
-    </div>
-
-</li>
-<li class="nav-item">
-        <%= link_to "Edit Profile", 
-        edit_user_registration_path, 
-        class:"nav-link" %>
-    </li>
- 
-  <%else%>
- 
- <li class="nav-item">
-        <%= link_to "Sign In", 
-        new_user_session_path, 
-        class:"nav-link" %>
-    </li>
-        <li class="nav-item">
-            <%= link_to "Sign Up", 
-            new_user_registration_path, 
-            class:"nav-link" %>
-        </li>
-      
-      <%end%>
-     
-
-        
+          <% if current_user&.admin? %>
+            <li class="nav-item">
+              <%= link_to "Courses", courses_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "New Course", new_course_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "User List", admin_users_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Announcements", admin_notifications_new_path, class: "nav-link" %>
+            </li>
+          <% end %>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Sign In", new_user_session_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Sign Up", new_user_registration_path, class: "nav-link" %>
+          </li>
+        <% end %>
       </ul>
 
-     
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+      <% if user_signed_in? %>
+        <!-- Right-aligned user actions (Everything closely packed) -->
+        <ul class="navbar-nav ms-auto d-flex align-items-center">
+          <!-- Notifications (FIXED alignment) -->
+          <li class="nav-item">
+            <%= link_to notifications_path, class: "nav-link d-flex align-items-center position-relative" do %>
+              Notifications
+              <% unread_count = unread_notifications_count(current_user) %>
+              <% if unread_count.positive? %>
+                <span class="badge rounded-pill bg-danger ms-1">
+                  <%= unread_count %>
+                </span>
+              <% end %>
+            <% end %>
+          </li>
+
+          <!-- Edit Profile -->
+          <li class="nav-item">
+            <%= link_to "Edit Profile", edit_user_registration_path, class: "nav-link ms-1" %>
+          </li>
+
+          <!-- Sign Out -->
+          <li class="nav-item">
+            <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "nav-link ms-1" %>
+          </li>
+        </ul>
+      <% end %>
+
+      <!-- Search bar (Minimal spacing) -->
+      <form class="d-flex ms-2">
+        <input class="form-control form-control-sm me-1" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success btn-sm" type="submit">Search</button>
       </form>
     </div>
   </div>
