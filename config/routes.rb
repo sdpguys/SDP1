@@ -1,25 +1,25 @@
 Rails.application.routes.draw do
-  get "quiz/generate", to: "quizzes#generate"
-  get "generate_quiz/:week_id", to: "quizzes#generate", as: "generate_quiz"
+  get 'quiz/generate', to: 'quizzes#generate'
+  get 'generate_quiz/:week_id', to: 'quizzes#generate', as: 'generate_quiz'
 
   get "notifications/index"
   get "dashboard/index"
-  resources :quizzes, only: [ :index ]
+  resources :quizzes, only: [:index]
   resources :quizzes do
     collection do
-      post "submit_results"
-      get "results" # Add this line to display quiz results
+      post 'submit_results'
+      get 'results' # Add this line to display quiz results
     end
   end
-
+  
   resources :notifications, only: [ :index, :show, :destroy ]
   # API Endpoints
-  get "generate_quiz", to: "quizzes#generate"
-  post "check_answers", to: "quizzes#check_answers"
+  get 'generate_quiz', to: 'quizzes#generate'
+  post 'check_answers', to: 'quizzes#check_answers'
   resources :quizzes do
-    post "submit_results", on: :collection
+    post 'submit_results', on: :collection
   end
-
+  
   namespace :admin do
     resources :notifications, only: [ :new, :create ]
   end
@@ -60,7 +60,7 @@ Rails.application.routes.draw do
       delete :destroy
     end
   end
-
+  
   resources :courses do
     resources :weeks
   end

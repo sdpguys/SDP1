@@ -1,6 +1,6 @@
 class UserCoursesController < ApplicationController
     before_action :authenticate_user!
-
+  
     # Add a course to the user's taken courses
     def create
       course = Course.find(params[:course_id])
@@ -11,7 +11,7 @@ class UserCoursesController < ApplicationController
         redirect_to dashboard_path, alert: "You have already taken this course."
       end
     end
-
+  
     # Remove a course from the user's taken courses
     def destroy
       user_course = current_user.user_courses.find_by(course_id: params[:id])
@@ -22,4 +22,5 @@ class UserCoursesController < ApplicationController
         redirect_to dashboard_path, alert: "Course not found in your list."
       end
     end
-end
+  end
+  

@@ -1,113 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
   <title>Quiz</title>
-  <style>
-    body {
-      font-family: sans-serif;
-    }
-    .question-block {
-      margin-bottom: 2em;
-    }
-    .correct-answer {
-      display: none; /* Hidden until the user submits */
-      color: green;
-      font-weight: bold;
-    }
-    #result {
-      display: none; /* Hidden until submission */
-      margin-top: 1em;
-      font-size: 1.2em;
-      font-weight: bold;
-    }
-  </style>
 </head>
 <body>
   <h2>Quiz</h2>
 
-  <% if @questions.any? %>
-    <!-- The form is purely for structure; we're handling the submission in JS below -->
-    <form id="quizForm">
-      <% @questions.each_with_index do |quiz, index| %>
-        <div class="question-block">
-          <!-- Display the question text -->
-          <p><strong>Q<%= index + 1 %>:</strong> <%= quiz.question %></p>
+  <form id="quizForm">
+    <% @questions.each_with_index do |quiz, index| %>
+      <div>
+        <p><strong>Q<%= index + 1 %>: <%= quiz.question %></strong></p>
 
-          <!-- Parse the stored JSON with rescue in case of malformed data -->
-          <% options = JSON.parse(quiz.options) rescue [] %>
-          <% options.each do |option_line| %>
-            <label>
-              <!--
-                By default, we assume each option starts with "A)" or "B)" etc.
-                If your format differs, adjust the substring or how you parse the lines.
-              -->
-              <input
-                type="radio"
-                name="question_<%= index %>"
-                value="<%= option_line[0] %>"  <!-- Grabs "A" or "B" etc. -->
-              >
-              <%= option_line %>
-            </label>
-            <br>
-          <% end %>
+        <% JSON.parse(quiz.options).each do |choice| %>
+          <label>
+            <input type="radio" name="question_<%= index %>" value="<%= choice[0] %>">
+            <%= choice %>
+          </label><br>
+        <% end %>
 
-          <!-- Store the correct answer in a hidden input, for client-side scoring -->
-          <input
-            type="hidden"
-            name="correct_<%= index %>"
-            value="<%= quiz.answer %>"
-          >
+        <!-- Store correct answer as hidden input -->
+        <input type="hidden" name="correct_<%= index %>" value="<%= quiz.answer %>">
+        
+        <!-- Area to display the correct answer after quiz submission -->
+        <p id="answer_<%= index %>" style="display:none;">
+          <strong>Correct Answer: <%= quiz.answer %></strong>
+        </p>
+      </div>
+      <hr>
+    <% end %>
 
-          <!-- A paragraph to reveal the correct answer after submission -->
-          <p
-            id="correct_answer_<%= index %>"
-            class="correct-answer"
-          >
-            Correct Answer: <%= quiz.answer %>
-          </p>
-        </div>
-        <hr>
-      <% end %>
+    <button type="button" onclick="submitQuiz()">Submit Quiz</button>
+  </form>
 
-      <!-- Submission button calls a JavaScript function to score the quiz -->
-      <button type="button" onclick="submitQuiz()">Submit Quiz</button>
-    </form>
-
-    <!-- Displays the user’s final score -->
-    <h3 id="result"></h3>
-
-  <% else %>
-    <!-- If there are no questions (database + generated), we show a fallback message -->
-    <p>No questions were found or generated for this quiz.</p>
-  <% end %>
+  <h3 id="result" style="display:none;"></h3>
 
   
   <script>
-    function submitQuiz() {
-      const totalQuestions = <%= @questions.size %>;
-      let score = 0;
+  function submitQuiz() {
+    let totalQuestions = <%= @questions.size %>;
+    let score = 0;
 
-      // Loop through each question
-      for (let i = 0; i < totalQuestions; i++) {
-        // Identify the chosen radio button for question i
-        const selected = document.querySelector(`input[name="question_${i}"]:checked`);
-        // Retrieve the correct answer from the hidden input
-        const correctAnswer = document.querySelector(`input[name="correct_${i}"]`).value;
+    for (let i = 0; i < totalQuestions; i++) {
+      let selected = document.querySelector('input[name="question_' + i + '"]:checked');
+      let correct = document.querySelector('input[name="correct_' + i + '"]').value;
 
-        // If selected matches the correct letter, increment the score
-        if (selected && selected.value === correctAnswer) {
-          score++;
-        }
-
-        // Reveal the correct answer text
-        document.getElementById(`correct_answer_${i}`).style.display = "block";
+      if (selected && selected.value === correct) {
+        score++;
       }
 
-      // Display the user’s total score
-      const resultElem = document.getElementById('result');
-      resultElem.textContent = `Your score: ${score} / ${totalQuestions}`;
-      resultElem.style.display = "block";
+      // Show the correct answer next to the question
+      document.getElementById('answer_' + i).style.display = "block";
     }
 
     // Display the user's score
@@ -138,4 +80,3 @@
 
 </body>
 </html>
-

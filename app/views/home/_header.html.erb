@@ -1,14 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <%= link_to "Teaching Assistant", root_path, class: "navbar-brand me-1" %>
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <%= link_to "Teaching Assistant", root_path, class: "navbar-brand" %>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <!-- Left-aligned navigation -->
-      <ul class="navbar-nav me-1">
+    <div class="collapse navbar-collapse d-flex justify-content-between align-items-center" id="navbarSupportedContent">
+      <ul class="navbar-nav d-flex align-items-center me-auto mb-2 mb-lg-0">
         <% if user_signed_in? %>
           <li class="nav-item">
             <%= link_to "About Us", home_about_path, class: "nav-link" %>
@@ -31,6 +30,14 @@
               <%= link_to "Announcements", admin_notifications_new_path, class: "nav-link" %>
             </li>
           <% end %>
+
+          <li class="nav-item">
+            <%= link_to "Sign Out", destroy_user_session_path, class: "nav-link" %>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to "Edit Profile", edit_user_registration_path, class: "nav-link" %>
+          </li>
         <% else %>
           <li class="nav-item">
             <%= link_to "Sign In", new_user_session_path, class: "nav-link" %>
@@ -39,39 +46,18 @@
             <%= link_to "Sign Up", new_user_registration_path, class: "nav-link" %>
           </li>
         <% end %>
+        <li class="nav-item d-flex align-items-center mx-2">
+            <div class="notifications">
+              <%= link_to notifications_path do %>
+                <span>Notifications <%= unread_notifications_count(current_user) %></span>
+              <% end %>
+            </div>
+          </li>
       </ul>
 
-      <% if user_signed_in? %>
-        <!-- Right-aligned user actions -->
-        <ul class="navbar-nav ms-auto d-flex align-items-center">
-          <!-- Notifications -->
-          <li class="nav-item">
-            <%= link_to notifications_path, class: "nav-link d-flex align-items-center position-relative" do %>
-              Notifications
-              <% unread_count = unread_notifications_count(current_user) %>
-              <% if unread_count.positive? %>
-                <span class="badge rounded-pill bg-danger ms-1">
-                  <%= unread_count %>
-                </span>
-              <% end %>
-            <% end %>
-          </li>
-
-          <!-- Edit Profile -->
-          <li class="nav-item">
-            <%= link_to "Edit Profile", edit_user_registration_path, class: "nav-link ms-1" %>
-          </li>
-
-          <!-- Sign Out -->
-          <li class="nav-item">
-            <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "nav-link ms-1" %>
-          </li>
-        </ul>
-      <% end %>
-
-      <!-- Search bar (Compact and well-aligned) -->
-      <form class="d-flex ms-2">
-        <input class="form-control form-control-sm me-1" type="search" placeholder="Search" aria-label="Search">
+      <!-- Search bar stays on the right -->
+      <form class="d-flex align-items-center">
+        <input class="form-control form-control-sm me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success btn-sm" type="submit">Search</button>
       </form>
     </div>

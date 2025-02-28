@@ -7,26 +7,34 @@
   <link rel="stylesheet" href="styles.css"> <!-- External CSS file (if needed) -->
   <style>
     /* Background image with Rails asset pipeline */
-      /* Adjust body for full background */
-  body {
-    font-family: Arial, sans-serif;
-    background: url(<%= asset_path('20240125104620_51253400.jpg') %>) no-repeat center center fixed;
-    background-size: cover;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-  }
+    body {
+      font-family: Arial, sans-serif;
+      background: url(<%= asset_path('20240125104620_51253400.jpg') %>) no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
 
-  /* Make space below the navbar */
-  .content {
-    background: rgba(0, 0, 0, 0.6); /* Dark overlay for readability */
-    padding: 40px;
-    border-radius: 10px;
-    display: inline-block;
-    margin-top: 80px; /* Move content BELOW the navbar */
-    width: 70%;
-  }
+    /* Ensure the navbar doesn't overlap content */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    /* Make space below the navbar */
+    .content {
+      background: rgba(0, 0, 0, 0.6); /* Dark overlay for readability */
+      padding: 40px;
+      border-radius: 10px;
+      display: inline-block;
+      margin-top: 100px; /* Moves content BELOW the navbar */
+      width: 70%;
+    }
 
     h1 {
       color: #007BFF;
@@ -54,8 +62,9 @@
     }
   </style>
 </head>
-<body>
 
+
+  <!-- Main Content (Positioned Below Header) -->
   <div class="content">
     <h1>Student Teaching Assistant Platform</h1>
     <h2>This platform is created by ADA Students in order to complete SDP</h2>
