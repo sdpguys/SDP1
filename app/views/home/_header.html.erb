@@ -25,6 +25,9 @@
               <%= link_to "User List", admin_users_path, class: "nav-link" %>
             </li>
             <li class="nav-item">
+              <%= link_to "Quiz Results", results_quizzes_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
               <%= link_to "Announcements", admin_notifications_new_path, class: "nav-link" %>
             </li>
           <% end %>
@@ -39,9 +42,9 @@
       </ul>
 
       <% if user_signed_in? %>
-        <!-- Right-aligned user actions (Everything closely packed) -->
+        <!-- Right-aligned user actions -->
         <ul class="navbar-nav ms-auto d-flex align-items-center">
-          <!-- Notifications (FIXED alignment) -->
+          <!-- Notifications -->
           <li class="nav-item">
             <%= link_to notifications_path, class: "nav-link d-flex align-items-center position-relative" do %>
               Notifications
@@ -66,7 +69,7 @@
         </ul>
       <% end %>
 
-      <!-- Search bar (Minimal spacing) -->
+      <!-- Search bar (Compact and well-aligned) -->
       <form class="d-flex ms-2">
         <input class="form-control form-control-sm me-1" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success btn-sm" type="submit">Search</button>

@@ -84,7 +84,6 @@
 
   
   <script>
-<<<<<<< HEAD
     function submitQuiz() {
       const totalQuestions = <%= @questions.size %>;
       let score = 0;
@@ -109,22 +108,6 @@
       const resultElem = document.getElementById('result');
       resultElem.textContent = `Your score: ${score} / ${totalQuestions}`;
       resultElem.style.display = "block";
-=======
-  function submitQuiz() {
-    let totalQuestions = <%= @questions.size %>;
-    let score = 0;
-
-    for (let i = 0; i < totalQuestions; i++) {
-      let selected = document.querySelector('input[name="question_' + i + '"]:checked');
-      let correct = document.querySelector('input[name="correct_' + i + '"]').value;
-
-      if (selected && selected.value === correct) {
-        score++;
-      }
-
-      // Show the correct answer next to the question
-      document.getElementById('answer_' + i).style.display = "block";
->>>>>>> 0a844e0f186a74a7d160222787a8a0f47e451028
     }
 
     // Display the user's score
@@ -155,3 +138,4 @@
 
 </body>
 </html>
+
