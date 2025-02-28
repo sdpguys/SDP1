@@ -94,11 +94,7 @@ def generate
       end
     end
   end
-<<<<<<< HEAD
 
-  @questions = (database_questions + generated_questions).shuffle
-  render "quizzes/download_quiz"
-=======
   def results
     @courses = Course.all
     @weeks=Week.all
@@ -112,8 +108,7 @@ def generate
   
     @quiz_results = @quiz_results.order(created_at: :desc)
   end
-  
-  
+
   def submit_results
     user = User.find(params[:user_id]) # Assuming user authentication exists
     week = Week.find(params[:week_id])
@@ -126,8 +121,3 @@ def generate
       score: score,
       total_questions: total_questions
     )
-
-    render json: { message: "Result saved successfully!", result: quiz_result }, status: :ok
-  end
->>>>>>> 0a844e0f186a74a7d160222787a8a0f47e451028
-end

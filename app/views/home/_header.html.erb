@@ -14,7 +14,6 @@
             <%= link_to "About Us", home_about_path, class: "nav-link" %>
           </li>
 
-<<<<<<< HEAD
           <% if current_user&.admin? %>
             <li class="nav-item">
               <%= link_to "Courses", courses_path, class: "nav-link" %>
@@ -72,80 +71,6 @@
         <input class="form-control form-control-sm me-1" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success btn-sm" type="submit">Search</button>
       </form>
-=======
-<% if current_user&.admin? %>
-
-        <li class="nav-item">
-            <%= link_to "Courses", 
-            courses_path, 
-            class:"nav-link" %>
-        </li>
-<li class="nav-item">
-            <%= link_to "New Course", new_course_path, class:"nav-link" %>
-        </li>
-       <li class="nav-item">
-            <%= link_to "User List", 
-            admin_users_path, 
-            class:"nav-link" %>
-        </li>
-        <li class="nav-item">
-        <%= link_to "Quiz Results", 
-        results_quizzes_path, 
-        class:"nav-link" %>
-    </li>
-        <li class="nav-item">
-        <%= link_to "Announcements", 
-        admin_notifications_new_path, 
-        class:"nav-link" %>
-    </li>
-      <% end %>
-  
-    <li class="nav-item">
-    <%= link_to "Sign Out", 
-    destroy_user_session_path, 
-    class:"nav-link" %>
-      <li class="nav-item">
-    <%= link_to "Dashboard", 
-    dashboard_index_path, 
-    class:"nav-link" %>
-       <div class="notifications">
-      <%= link_to notifications_path do %>
-        <span>Notifications <%= unread_notifications_count(current_user) %></span>
-      <% end %>
-    </div>
-
-</li>
-<li class="nav-item">
-        <%= link_to "Edit Profile", 
-        edit_user_registration_path, 
-        class:"nav-link" %>
-    </li>
- 
-  <%else%>
- 
- <li class="nav-item">
-        <%= link_to "Sign In", 
-        new_user_session_path, 
-        class:"nav-link" %>
-    </li>
-        <li class="nav-item">
-            <%= link_to "Sign Up", 
-            new_user_registration_path, 
-            class:"nav-link" %>
-        </li>
-      
-      <%end%>
-     
-
-        
-      </ul>
-
-      <form class="d-flex" role="search">
-      <input class="form-control form-control-sm me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success btn-sm" type="submit">Search</button>
-    </form>
-    
->>>>>>> 0a844e0f186a74a7d160222787a8a0f47e451028
     </div>
   </div>
 </nav>
