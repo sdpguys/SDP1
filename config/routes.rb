@@ -5,12 +5,21 @@ Rails.application.routes.draw do
   get "notifications/index"
   get "dashboard/index"
   resources :quizzes, only: [:index]
+  resources :quizzes do
+    collection do
+      post 'submit_results'
+      get 'results' # Add this line to display quiz results
+    end
+  end
   
   resources :notifications, only: [ :index, :show, :destroy ]
   # API Endpoints
   get 'generate_quiz', to: 'quizzes#generate'
   post 'check_answers', to: 'quizzes#check_answers'
-
+  resources :quizzes do
+    post 'submit_results', on: :collection
+  end
+  
   namespace :admin do
     resources :notifications, only: [ :new, :create ]
   end
