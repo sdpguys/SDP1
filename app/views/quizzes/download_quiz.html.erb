@@ -82,7 +82,9 @@
     <p>No questions were found or generated for this quiz.</p>
   <% end %>
 
+  
   <script>
+<<<<<<< HEAD
     function submitQuiz() {
       const totalQuestions = <%= @questions.size %>;
       let score = 0;
@@ -107,7 +109,49 @@
       const resultElem = document.getElementById('result');
       resultElem.textContent = `Your score: ${score} / ${totalQuestions}`;
       resultElem.style.display = "block";
+=======
+  function submitQuiz() {
+    let totalQuestions = <%= @questions.size %>;
+    let score = 0;
+
+    for (let i = 0; i < totalQuestions; i++) {
+      let selected = document.querySelector('input[name="question_' + i + '"]:checked');
+      let correct = document.querySelector('input[name="correct_' + i + '"]').value;
+
+      if (selected && selected.value === correct) {
+        score++;
+      }
+
+      // Show the correct answer next to the question
+      document.getElementById('answer_' + i).style.display = "block";
+>>>>>>> 0a844e0f186a74a7d160222787a8a0f47e451028
     }
-  </script>
+
+    // Display the user's score
+    document.getElementById('result').innerHTML = "Your score: " + score + " / " + totalQuestions;
+    document.getElementById('result').style.display = "block";
+
+    // Send the result to the server
+    fetch("/quizzes/submit_results", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": "<%= form_authenticity_token %>"
+      },
+      body: JSON.stringify({
+        user_id: <%= current_user.id %>,  // Assuming you have user authentication
+        week_id: <%= @questions.first.week.id %>,
+        score: score,
+        total_questions: totalQuestions
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert(data.message);
+    })
+    .catch(error => console.error("Error submitting quiz results:", error));
+  }
+</script>
+
 </body>
 </html>

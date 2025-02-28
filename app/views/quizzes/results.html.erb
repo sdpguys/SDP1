@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz Results</title>
+</head>
+<body>
+  <h2>Your Quiz Results</h2>
+
+ 
+
+ 
+
+  <!-- Quiz Results Table -->
+  <% if @quiz_results.any? %>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Course</th>
+          <th>Week</th>
+          <th>Score</th>
+          <th>Total Questions</th>
+          <th>Percentage</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @quiz_results.each do |result| %>
+          <tr>
+            <td><%= result.week.course.course_name %></td> <!-- Use course_name here -->
+            <td><%= result.week.title %></td>
+            <td><%= result.score %></td>
+            <td><%= result.total_questions %></td>
+            <td><%= (result.score.to_f / result.total_questions * 100).round(2) %>%</td>
+            <td><%= result.created_at.strftime("%B %d, %Y - %H:%M") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No quiz results found.</p>
+  <% end %>
+
+  <a href="/">Back to Home</a>
+</body>
+</html>
