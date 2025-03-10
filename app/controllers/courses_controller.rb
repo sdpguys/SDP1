@@ -1,9 +1,7 @@
 class CoursesController < ApplicationController
   # Use :set_course before the specified actions
   before_action :authenticate_user!
-
   # before_action :authenticate_admin!
-
   before_action :set_course, only: [ :show, :edit, :update, :destroy ]
 
   # GET /courses or /courses.json
@@ -13,6 +11,7 @@ class CoursesController < ApplicationController
 
   # GET /courses/1 or /courses/1.json
   def show
+    @course = Course.find(params[:id])
     @weeks = @course.weeks
   end
 
@@ -20,21 +19,15 @@ class CoursesController < ApplicationController
   def new
     @course = Course.new
   end
-  def show
-    @course = Course.find(params[:id])
-    @weeks = @course.weeks
-  end
-
 
   # GET /courses/1/edit
   def edit
     @course = Course.find(params[:id])
   end
 
-
   # POST /courses or /courses.json
   def create
-    @course = Course.new(course_params)
+    @course = current_user.courses.build(course_params)  # Associate course with current user
 
     respond_to do |format|
       if @course.save
