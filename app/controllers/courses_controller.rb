@@ -71,6 +71,7 @@ class CoursesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def course_params
-    params.require(:course).permit(:course_name, :course_instructor, :course_grading_criteria, :courses_your_grade, :course_comments)
+    params.require(:course).permit(:course_name, :course_instructor, :course_grading_criteria, :courses_your_grade, :course_comments, :user_id)
+    # Added :user_id to permit saving the creator's ID
   end
 end

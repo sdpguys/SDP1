@@ -6,7 +6,7 @@
       <th title="The grading system or criteria for the course">Grading Criteria</th>
       <th title="Your grade in the course based on the grading criteria">Your Grade</th>
       <th title="Any comments or feedback about the course">Comments</th>
-      <th title="The user who created the course">Created By</th> <!-- New Column for Creator -->
+      <th title="The user who created the course">Created By</th>
       <th title="Actions such as editing or deleting course details">Actions</th>
     </tr>
   </thead>
@@ -17,10 +17,14 @@
       <td><%= @course.course_grading_criteria %></td>
       <td><%= @course.courses_your_grade %></td>
       <td><%= @course.course_comments %></td>
-      <td><%= @course.user.email if @course.user %></td> <!-- Display creator's email without deleting anything -->
+      <td><%= @course.user.email if @course.user %></td>
       <td>
         <%= link_to 'Back to Courses', courses_path, class: 'btn btn-secondary btn-sm' %>
         <%= link_to 'Add New Week', new_course_week_path(@course), class: 'btn btn-primary btn-sm' %>
+        
+        <% if current_user&.admin? %> <!-- Only show if user is admin -->
+          <%= button_to 'Destroy Course', course_path(@course), method: :delete, data: { confirm: 'Are you sure you want to delete this course?' }, class: 'btn btn-danger btn-sm' %>
+        <% end %>
       </td>
     </tr>
   </tbody>

@@ -15,6 +15,9 @@
     </div>
   <% end %>
 
+  <!-- Hidden field to capture user_id of the creator -->
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
   <div class="field form-group">
     <%= form.label :course_name, style: "display: block" %>
     <%= form.text_field :course_name, class: "field form-control", placeholder: "Name of the Course" %>
