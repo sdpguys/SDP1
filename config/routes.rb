@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
+  get "errors/not_found"
+  get "errors/unprocessable_entity"
+  get "errors/internal_server_error"
   get 'quiz/generate', to: 'quizzes#generate'
   get 'generate_quiz/:week_id', to: 'quizzes#generate', as: 'generate_quiz'
-
+  match "/404", to: "errors#not_found", via: :all
+  match "/422", to: "errors#unprocessable_entity", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
+  
   get "notifications/index"
   get "dashboard/index"
   resources :quizzes, only: [:index]
@@ -86,4 +92,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  match "*path", to: "errors#not_found", via: :all
 end

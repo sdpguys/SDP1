@@ -2,44 +2,98 @@
 <html>
 <head>
   <title>Quiz Results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: #28a745;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    a:hover {
+      background-color: #218838;
+    }
+  </style>
 </head>
 <body>
-  <h2>Your Quiz Results</h2>
+  <div class="container">
+    <h2>Your Quiz Results</h2>
 
- 
-
- 
-
-  <!-- Quiz Results Table -->
-  <% if @quiz_results.any? %>
-    <table border="1">
-      <thead>
-        <tr>
-          <th>Course</th>
-          <th>Week</th>
-          <th>Score</th>
-          <th>Total Questions</th>
-          <th>Percentage</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @quiz_results.each do |result| %>
+    <% if @quiz_results.any? %>
+      <table>
+        <thead>
           <tr>
-            <td><%= result.week.course.course_name %></td> <!-- Use course_name here -->
-            <td><%= result.week.title %></td>
-            <td><%= result.score %></td>
-            <td><%= result.total_questions %></td>
-            <td><%= (result.score.to_f / result.total_questions * 100).round(2) %>%</td>
-            <td><%= result.created_at.strftime("%B %d, %Y - %H:%M") %></td>
+            <th>Course</th>
+            <th>Week</th>
+            <th>Score</th>
+            <th>Total Questions</th>
+            <th>Percentage</th>
+            <th>Date</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% else %>
-    <p>No quiz results found.</p>
-  <% end %>
+        </thead>
+        <tbody>
+          <% @quiz_results.each do |result| %>
+            <tr>
+              <td><%= result.week.course.course_name %></td>
+              <td><%= result.week.title %></td>
+              <td><%= result.score %></td>
+              <td><%= result.total_questions %></td>
+              <td><%= (result.score.to_f / result.total_questions * 100).round(2) %>%</td>
+              <td><%= result.created_at.strftime("%B %d, %Y - %H:%M") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No quiz results found.</p>
+    <% end %>
 
-  <a href="/">Back to Home</a>
+    <a href="/">Back to Home</a>
+  </div>
 </body>
 </html>

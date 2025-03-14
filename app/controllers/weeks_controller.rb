@@ -33,6 +33,9 @@ class WeeksController < ApplicationController
     # You can also add other dependent models here
     @week.destroy
     redirect_to course_path(@course), notice: "Week deleted successfully."
+  rescue ActiveRecord::InvalidForeignKey
+    render "errors/foreign_key_error", status: :unprocessable_entity
+  
   end
   
 

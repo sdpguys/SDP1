@@ -59,7 +59,11 @@ class CoursesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to courses_path, status: :see_other, notice: "Course was successfully destroyed." }
       format.json { head :no_content }
+
     end
+  rescue ActiveRecord::InvalidForeignKey
+    render "errors/foreign_key_error", status: :unprocessable_entity
+  
   end
 
   private
@@ -67,6 +71,8 @@ class CoursesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_course
     @course = Course.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to errors_not_found_path
   end
 
   # Only allow a list of trusted parameters through.

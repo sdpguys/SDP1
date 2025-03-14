@@ -136,11 +136,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_10_044807) do
   add_foreign_key "notifications", "users"
   add_foreign_key "quiz_results", "users"
   add_foreign_key "quiz_results", "weeks"
-  add_foreign_key "quizzes", "courses"
-  add_foreign_key "quizzes", "weeks"
-  add_foreign_key "quizzesthats", "courses"
-  add_foreign_key "quizzesthats", "weeks"
-  add_foreign_key "user_courses", "courses"
+  add_foreign_key "quizzes", "courses", on_delete: :cascade
+  add_foreign_key "quizzes", "weeks", on_delete: :cascade
+  add_foreign_key "quizzesthats", "courses", on_delete: :cascade
+  add_foreign_key "quizzesthats", "weeks", on_delete: :cascade
+  add_foreign_key "user_courses", "courses", on_delete: :cascade
   add_foreign_key "user_courses", "users"
-  add_foreign_key "weeks", "courses"
+  add_foreign_key "weeks", "courses", on_delete: :cascade
 end
