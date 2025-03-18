@@ -9,6 +9,9 @@
 
 # Ignore all environment files.
 /.env*
+/.development.sqlite3*
+/.development.sqlite3-shm*
+/.development.sqlite3-wal*
 
 # Ignore all logfiles and tempfiles.
 /log/*
