@@ -2,35 +2,35 @@ Rails.application.routes.draw do
   get "errors/not_found"
   get "errors/unprocessable_entity"
   get "errors/internal_server_error"
-  get 'quiz/generate', to: 'quizzes#generate'
-  get 'generate_quiz/:week_id', to: 'quizzes#generate', as: 'generate_quiz'
+  get "quiz/generate", to: "quizzes#generate"
+  get "generate_quiz/:week_id", to: "quizzes#generate", as: "generate_quiz"
   match "/404", to: "errors#not_found", via: :all
   match "/422", to: "errors#unprocessable_entity", via: :all
   match "/500", to: "errors#internal_server_error", via: :all
-  
+
   get "notifications/index"
   get "dashboard/index"
-  resources :quizzes, only: [:index]
+  resources :quizzes, only: [ :index ]
   resources :quizzes do
     collection do
-      post 'submit_results'
-      get 'results' # Add this line to display quiz results
+      post "submit_results"
+      get "results" # Add this line to display quiz results
     end
   end
-  
+
   resources :notifications, only: [ :index, :show, :destroy ]
   # API Endpoints
-  get 'generate_quiz', to: 'quizzes#generate'
-  post 'check_answers', to: 'quizzes#check_answers'
+  get "generate_quiz", to: "quizzes#generate"
+  post "check_answers", to: "quizzes#check_answers"
   resources :quizzes do
-    post 'submit_results', on: :collection
+    post "submit_results", on: :collection
   end
-  
+
   namespace :admin do
     resources :notifications, only: [ :new, :create ]
   end
   resources :user_courses, only: [ :create, :destroy ]  # For adding and removing courses
-  get "dashboard", to: "dashboard#index"             # Dashboard route
+  # get "dashboard", to: "dashboard#index"             # Dashboard route
   resources :courses
   namespace :admin do
     get "notifications/new"
@@ -66,7 +66,7 @@ Rails.application.routes.draw do
       delete :destroy
     end
   end
-  
+
   resources :courses do
     resources :weeks
   end
