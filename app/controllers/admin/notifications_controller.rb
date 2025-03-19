@@ -20,7 +20,7 @@ class Admin::NotificationsController < ApplicationController
           read: false  # Set read status to false for all new notifications
         )
       end
-      redirect_to dashboard_path, notice: "Notification sent to all users."
+      redirect_to notifications_path, notice: "Notification sent to all users."
     else
       flash[:alert] = "Title and message cannot be blank"
       render :new
