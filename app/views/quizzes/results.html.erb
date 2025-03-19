@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Quiz Results</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js -->
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -58,6 +59,11 @@
     a:hover {
       background-color: #218838;
     }
+
+    .chart-container {
+      margin-bottom: 30px; /* Added margin for better spacing */
+      width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -65,6 +71,12 @@
     <h2>Your Quiz Results</h2>
 
     <% if @quiz_results.any? %>
+
+      <!-- Chart Container (Moved above the table) -->
+      <div class="chart-container">
+        <canvas id="quizChart"></canvas>
+      </div>
+
       <table>
         <thead>
           <tr>
@@ -89,6 +101,39 @@
           <% end %>
         </tbody>
       </table>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          var ctx = document.getElementById('quizChart').getContext('2d');
+
+          var quizLabels = <%= @quiz_results.map { |result| "#{result.week.course.course_name} - #{result.week.title}" }.to_json.html_safe %>;
+          var quizScores = <%= @quiz_results.map(&:score).to_json.html_safe %>;
+
+          var quizChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: quizLabels, // Labels as Course - Week
+              datasets: [{
+                label: 'Quiz Scores',
+                data: quizScores,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive: true,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  max: 10 // Y-axis max set to 10
+                }
+              }
+            }
+          });
+        });
+      </script>
+
     <% else %>
       <p>No quiz results found.</p>
     <% end %>

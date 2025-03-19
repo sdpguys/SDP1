@@ -60,7 +60,7 @@ class QuizzesController < ApplicationController
     # Filter by course name if provided
     @quiz_results = @quiz_results.where(week: { course: { course_name: params[:course_name] } }) if params[:course_name].present?
   
-    @quiz_results = @quiz_results.order(created_at: :desc)
+    @quiz_results = @quiz_results.order(created_at: :asc)
   end
   
   

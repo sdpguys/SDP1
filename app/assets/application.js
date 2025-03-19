@@ -12,4 +12,5 @@
 //= require_tree .
 // app/javascript/packs/application.js
 
+//= require chart.js
 
