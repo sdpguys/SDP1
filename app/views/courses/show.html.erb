@@ -17,7 +17,9 @@
       <td><%= @course.course_grading_criteria %></td>
       <td><%= @course.courses_your_grade %></td>
       <td><%= @course.course_comments %></td>
-      <td><%= @course.user.email if @course.user %></td>
+      <td>
+  <%= "#{@course.user.name} #{@course.user.surname}" if @course.user %>
+</td>
       <td>
         <%= link_to 'Back to Courses', courses_path, class: 'btn btn-secondary btn-sm' %>
         <%= link_to 'Add New Week', new_course_week_path(@course), class: 'btn btn-primary btn-sm' %>

@@ -17,14 +17,16 @@
         <td><%= course.course_grading_criteria %></td>
         <td><%= course.course_comments %></td>
         
-        <!-- Display creator's email if available, visible to all users -->
-        <td>
-          <% if course.user %>
-            <%= course.user.email %>
-          <% else %>
-            <em>Unknown</em> <!-- Show "Unknown" if no user is associated -->
-          <% end %>
-        </td>
+      <!-- Display creator's name and surname if available, visible to all users -->
+<td>
+  <% if course.user %>
+    <%= course.user.name  %>
+    <%= course.user.surname %>
+  <% else %>
+    <em>Unknown</em> <!-- Show "Unknown" if no user is associated -->
+  <% end %>
+</td>
+
 
         <td>
           <!-- Action buttons (no deletions) -->
