@@ -8,12 +8,14 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 #User.create!(email: 'admin@example.com', password: 'password', admin: true)
-user = User.new(
-  email: 'admin',         # Invalid email format
-  password: 'admin',      # Invalid password length
-  password_confirmation: 'admin',  # Password confirmation
-  admin: true             # Set the user as an admin
+# db/seeds.rb
+
+User.create!(
+  email: "admin@example.com",
+  password: "password",
+  password_confirmation: "password",
+  admin: true
 )
 
 # Save without validation
-user.save(validate: false)
+#user.save(validate: false)
