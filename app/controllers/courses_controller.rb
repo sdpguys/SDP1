@@ -59,11 +59,9 @@ class CoursesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to courses_path, status: :see_other, notice: "Course was successfully destroyed." }
       format.json { head :no_content }
-
     end
   rescue ActiveRecord::InvalidForeignKey
     render "errors/foreign_key_error", status: :unprocessable_entity
-  
   end
 
   private
@@ -75,9 +73,15 @@ class CoursesController < ApplicationController
     redirect_to errors_not_found_path
   end
 
-  # Only allow a list of trusted parameters through.
-  def course_params
-    params.require(:course).permit(:course_name, :course_instructor, :course_grading_criteria, :courses_your_grade, :course_comments, :user_id)
-    # Added :user_id to permit saving the creator's ID
-  end
-end
+    # Only allow a list of trusted parameters through.
+    # Only allow a list of trusted parameters through.
+    def course_params
+      params.require(:course).permit(
+        :course_name,
+        :course_instructor,
+        :course_grading_criteria,
+        :courses_your_grade,
+        :course_comments
+      )
+    end  # ✅ closes course_params
+end  # ✅ closes class CoursesController

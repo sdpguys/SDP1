@@ -20,12 +20,13 @@
       <!-- Display creator's name and surname if available, visible to all users -->
 <td>
   <% if course.user %>
-    <%= course.user.name  %>
-    <%= course.user.surname %>
+    <%= course.user.name %>
   <% else %>
-    <em>Unknown</em> <!-- Show "Unknown" if no user is associated -->
+    <em>Unknown</em>
   <% end %>
 </td>
+
+
 
 
         <td>
