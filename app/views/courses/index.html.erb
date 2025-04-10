@@ -5,8 +5,8 @@
       <th>Instructor</th>
       <th>Grading Criteria</th>
       <th>Comments</th>
-      <th>Created By</th> <!-- New column for creator's email -->
-      <th>Actions</th> <!-- Column for the buttons -->
+      <th>Created By (Email)</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -16,28 +16,23 @@
         <td><%= course.course_instructor %></td>
         <td><%= course.course_grading_criteria %></td>
         <td><%= course.course_comments %></td>
-        
-      <!-- Display creator's name and surname if available, visible to all users -->
-<td>
-  <% if course.user %>
-    <%= course.user.name %>
-  <% else %>
-    <em>Unknown</em>
-  <% end %>
-</td>
-
-
-
-
         <td>
-          <!-- Action buttons (no deletions) -->
+          <% if course.user.present? %>
+            <%= course.user.email %>
+          <% else %>
+            <em>Not assigned</em>
+          <% end %>
+        </td>
+        <td>
           <%= link_to 'Show', course_path(course), class: 'btn btn-secondary btn-sm' %>
           <%= link_to 'Edit', edit_course_path(course), class: 'btn btn-primary btn-sm' %>
 
-          <% if current_user&.admin? %> <!-- Only admins can see the "Destroy" button (no deletions) -->
-            <%= button_to 'Destroy', course_path(course), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm', style: 'padding: 2px 5px; font-size: 12px;' %>
+          <% if current_user&.admin? %>
+            <%= button_to 'Destroy', course_path(course), method: :delete,
+                  data: { confirm: 'Are you sure?' },
+                  class: 'btn btn-danger btn-sm',
+                  style: 'padding: 2px 5px; font-size: 12px;' %>
           <% end %>
-          
         </td>
       </tr>
     <% end %>
